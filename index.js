@@ -11,7 +11,13 @@ app.set('view engine','handlebars')
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
+// Rotas
+
 app.get('/', function(req, res){
+    res.render('home')
+})
+
+app.get('/cad', function(req, res){
     res.render('formulario')
 })
 
@@ -21,7 +27,7 @@ app.post('/add', function(req, res){
         titulo: req.body.titulo,
         conteudo: req.body.conteudo
     }).then(function(){
-        res.send('rataria criada com sucesso')
+        res.redirect('/');
     }).catch(function(erro){
         res.send('Houve um erro: '+erro)
     })
