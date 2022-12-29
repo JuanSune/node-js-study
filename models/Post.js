@@ -9,4 +9,4 @@ const Post = db.sequelize.define('rataria', {
     }
 })
 
-Post.sync({force: true});
+module.exports = Post;

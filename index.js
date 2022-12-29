@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const hb = require('express-handlebars');
-
+const Post = require('./models/Post');
 
 
 // Configuracao Handblars OU Template Engine
@@ -16,7 +16,17 @@ app.get('/', function(req, res){
 })
 
 app.post('/add', function(req, res){
-   res.send(`Titulo escrito foi: ${req.body.titulo} e o conteudo: ${req.body.conteudo}`)
+
+    Post.create({
+        titulo: req.body.titulo,
+        conteudo: req.body.conteudo
+    }).then(function(){
+        res.send('rataria criada com sucesso')
+    }).catch(function(erro){
+        res.send('Houve um erro: '+erro)
+    })
+
+   
 })
 
 app.listen(8081);
