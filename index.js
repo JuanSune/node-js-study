@@ -1,16 +1,15 @@
 const express = require('express');
 const app = express();
-const handlebars = require('express-handlebars');
+const hb = require('express-handlebars');
 const Sequelize = require('sequelize');
-const hbs = handlebars.create({
-    defaultLayout: "main"
-})
 
-app.engine("handlebars", () => hbs)
 
-// Configuracao
-// Templeta engine
+// Configuracao Handblars OU Template Engine
+app.engine('handlebars', hb.engine({defaultLayout: 'main'}))
 app.set('view engine','handlebars')
+// Configuração do Body-parser, serve pra pegar informaçoes atraves do metodo post
+app.use(express.urlencoded({extended:false}))
+app.use(express.json())
 
 // Conexao com banco de dados
 const sequelize = new Sequelize('cadastro','root','',{
@@ -19,7 +18,12 @@ const sequelize = new Sequelize('cadastro','root','',{
 });
 
 app.get('/', function(req, res){
-    res.render('../views/formulario')
+    res.render('formulario')
+})
+
+app.post('/add', function(req, res){
+    
+    res.send(`Titulo escrito foi: ${req.body.titulo} e o conteudo: ${req.body.conteudo}`)
 })
 
 app.listen(8081);
